@@ -6,19 +6,13 @@ pipeline{
             }
         }
     stages{
-        stage("Code Quality Analysis"){
+        stage("Scan"){
             steps{
                     script {
                             withSonarQubeEnv(credentialsId: 'sonar-cred1') {
-                            sh 'mvn clean package sonar:sonar'
+                            sh 'mvn clean sonar:sonar'
                             }
 
-                            //timeout(time: 1, unit: 'HOURS') {
-		                    //def qg = waitForQualityGate()
-		                    //if (qg.status != 'ok') {
-		                    //error "Pipeline aborted due to quality gate failure: ${qg.status}"
-		                    //}
-                            //}
 
 
                         }
@@ -27,6 +21,26 @@ pipeline{
 
 
             }
-            
+           
+	stage('Quality Gate') {
+		steps {
+			
+			
+                            //timeout(time: 1, unit: 'HOURS') {
+		                    //def qg = waitForQualityGate()
+		                    //if (qg.status != 'ok') {
+		                    //error "Pipeline aborted due to quality gate failure: ${qg.status}"
+		                    //}
+                            //}
+			
+			timeout(time:5, unit: 'MINUTES') {
+	 		waitForQualityGate abortPipeline: true
+			}
+		}
+
+	
+	}  
+	    
+	    
         }
     }
