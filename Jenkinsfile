@@ -5,7 +5,9 @@ pipeline{
             args '-v /root/.m2:/root/.m2'
         }
     }
-    stages{      
+    stages{   
+
+        stage{   
             steps{
                 
                 script {
@@ -17,4 +19,5 @@ pipeline{
         }
     }
     
+}
 }
