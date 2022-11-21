@@ -1,0 +1,16 @@
+set up jenkins server to use docker as an agent
+-----------------------------------------------
+
+after installing jenkins
+
+install docker in jenkins server
+--------------------------------
+
+sudo apt update -y 
+sudo apt install docker.io -y
+sudo groupadd docker
+sudo usermod -aG docker ubuntu
+sudo systemctl restart docker
+sudo systemctl enable docker
+sudo usermod -aG docker jenkins 
+sudo chmod jenkins:jenkins /var/run/docker.sock
