@@ -1,0 +1,38 @@
+pipeline{
+    agent{
+        docker {
+                image 'maven:3.8.1-adoptopenjdk-11'
+                args '-v /root/.m2:/root/.m2'
+            }
+        }
+    stages{
+        stage("Scan"){
+            steps{
+                  
+                  script {
+                            withSonarQubeEnv(installationName: 'SonarAdmin', credentialsId: 'jenkins-sonar') {
+                            sh 'mvn clean sonar:sonar'
+                            }
+
+                        }
+            
+                }
+
+
+            }
+           
+	stage('Quality Gate') {
+		steps {
+          script {		
+			        timeout(time:5, unit: 'MINUTES') {
+	 		        waitForQualityGate abortPipeline: true
+              }
+          }
+		  }
+
+	
+	}  
+	    
+	    
+     }
+}
