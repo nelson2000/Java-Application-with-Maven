@@ -2,10 +2,11 @@ pipeline{
     agent any
     stages{
         stage("Code Quality checks with Sonarqube"){
-
-            docker {
-                 'image: openjdk:11'
-            }
+            agent {
+                docker {
+                        'image: openjdk:11'
+                        }
+                }
             steps{
                 
                 script {
