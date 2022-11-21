@@ -8,14 +8,15 @@ pipeline{
     stages{
         stage("Scan"){
             steps{
-                    script {
-                            withSonarQubeEnv(credentialsId: 'sonar-cred1') {
-                            sh 'mvn clean sonar:sonar'
-                            }
+                    withSonarQubeEnv(installationName: 'Sonar' credentialsId: 'sonar-cred1')
+		    sh 'mvn clean sonar:sonar'
+		    
+		    //script {
+                            //withSonarQubeEnv(credentialsId: 'sonar-cred1') {
+                            //sh 'mvn clean sonar:sonar'
+                           // }
 
-
-
-                        }
+                        //}
             
                 }
 
